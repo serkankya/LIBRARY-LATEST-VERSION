@@ -1,0 +1,1193 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <string.h>
+#include <time.h>
+
+
+//void foo() {} //bunlari main'de 2 tane giris yazisi calistiramama sorununu çözmek için kullandim
+//void RandomKitap() {}
+
+
+int main(){
+	
+	char yazi[10];
+	
+	system("CLS");
+	printf("1 - Giris Yap\n2 - Kayit ol \nSeciniz : ");
+	scanf("%s",&yazi);
+	
+	if(strlen(yazi)>1)
+	{ 
+		printf("Lutfen 1 veya 2'yi seciniz.\n"); 
+		sleep(1);
+		main();
+	}
+	else
+	{
+	
+	
+	int girissecim = atoi(yazi);
+	
+	switch(girissecim)
+	{
+		case 1 : {
+			system("CLS");
+			printf("Giris ekranina yonlendiriliyorsunuz.\n..\n...\n\n");
+			sleep(2);
+
+			while(!GirisYap()) {
+				printf("\nYanlis kullanici adi veya sifre!\nTekrar deneyiniz...\n\n");
+				sleep(1);
+			}
+
+			sleep(1);
+			printf("\n...\nYukleniyor...");
+			
+			sleep(1);
+			kutuphanesistemi();
+
+			break;
+		}
+		case 2 : {
+			printf("Kayit ekranina yonlendiriliyorsunuz.\n");
+			sleep(1);
+
+			while(!KayitOl()) {
+				sleep(1);
+			}
+
+			sleep(1);
+			printf("\n...\nYukleniyor...");
+			
+			sleep(1);
+			kutuphanesistemi();
+
+			break;
+		}
+		default : system("CLS"); main(); break;
+	}
+
+	
+}
+	
+	
+		
+	return 0;
+}
+
+
+int RandomKitap(){
+	
+	
+	srand(time(0));
+	char isimler[100][62];
+	int isim_uzunluk = read_file("randomkitap.txt",isimler);
+	
+	
+	
+	int i;
+	
+	for(i=0;i<=35;i++) //SORUNUMUZ BURADA !!!!!
+	{
+		
+		
+		char harf;
+		
+		//scanf(" %c",&harf)==1 && (harf=='e' || harf=='E');
+		if(scanf(" %c",&harf)==1 && (harf=='e' || harf=='E'))
+		{
+		system("CLS");
+		printf("\nProgramimizin bugun sana onerdigi kitap : \n**%s**\n", isimler[rnd(isim_uzunluk)]);
+		printf("\nDaha fazla kitap onerisi gormek ister misin ? (E/e)\nProgramdan cikis yapmak icin 'E' harici herhangi bir tusa basiniz.");
+		}
+		else
+		{
+			system("CLS");
+			printf("Cikisiniz yapildi.\nTekrar gorusmek uzere,\nIyi gunler dileriz...");
+			exit(0);
+		}
+	}
+
+//	while(scanf(" %c",&harf)==1 && (harf=='e' || harf=='E')) ; // %c boslugu unutma
+	
+	
+}
+
+
+int read_file(const char *dosyaadi,char arr[][62]){
+	int boyut = 0;
+	FILE *dosya = fopen("randomkitap.txt","r");
+	char sinir[62];
+	while(fgets(sinir,sizeof sinir, dosya)){
+		sinir[strcspn(sinir, "\n")] = '\0';
+		strcpy(arr[boyut++],sinir);
+	}
+	fclose(dosya);
+	return boyut;
+		 
+}
+
+
+int rnd(int n){
+	return rand() % n;
+}
+
+
+int main2(){
+	printf("Basarili\n");
+	return 0;
+}
+
+	
+int KayitOl() {
+	char k_adi[25];
+	char sifre[25];
+	
+	system("CLS");
+	printf("Kullanici adinizi giriniz : ");
+	scanf("%s",k_adi);
+	
+	if(strlen(k_adi)<=5)
+	{
+		printf("Kullanici adiniz en az 6 karakter icermelidir!");
+		sleep(2);
+		KayitOl();
+	}
+	else if(strlen(k_adi)>=16)
+	{
+		printf("Kullanici adiniz en fazla 15 karakter icerebilir!");
+		sleep(2);
+		KayitOl();
+	}
+	else
+	{
+		
+		printf("Sifrenizi giriniz : ");
+		scanf("%s",sifre);
+		
+		if(strlen(sifre)<=7)
+		{
+			printf("Sifreniz en az 8 karakter icermelidir!");
+			sleep(2);
+			KayitOl();
+		}
+		else if(strlen(sifre)>=19)
+		{
+			printf("Sifreniz en fazla 18 karakter icerebilir!");
+			sleep(2);
+			KayitOl();
+		}
+		else
+		{
+	
+
+	FILE *passwords = fopen("sifre.txt", "a");
+    FILE *usernames = fopen("kadi.txt", "a");
+
+    if (usernames == NULL || passwords == NULL) {
+        return 0;
+    }
+
+	char username[256];
+
+	int giris = 0;
+
+		
+		fprintf(usernames, "\n%s\n", k_adi);
+		fprintf(passwords, "\n%s\n", sifre);
+		giris = 1;
+
+    
+
+    fclose(usernames);
+    fclose(passwords);
+
+	if(giris == 1) {
+		printf("\nKayit islemi basariyla gerceklesti!\n");
+		printf("Giris ekranina yonlendiriliyorsunuz...");
+		sleep(2);
+		main();
+	}
+	else{
+		printf("Basarisiz !");
+		exit(0);
+	}
+
+    return 0;
+    	}
+	}	
+}
+
+
+int GirisYap() {
+	
+	char k_adi[25];
+	char sifre[25];
+	
+	system("CLS");
+	printf("Kullanici adinizi giriniz : ");
+	scanf("%s",k_adi);
+	printf("Sifrenizi giriniz : ");
+	scanf("%s",sifre);
+
+	FILE *passwords = fopen("sifre.txt", "r");
+    FILE *usernames = fopen("kadi.txt", "r");
+
+    if (usernames == NULL || passwords == NULL) {
+        return 0;
+    }
+
+	char username[256], password[256];
+
+	int giris = 0;
+
+    while(1) {
+        if(!fgets(username, sizeof(username), usernames)) {
+        	break;
+		}
+
+        if(!fgets(password, sizeof(password), passwords)) {
+            break;
+        }
+
+        username[strcspn(username, "\n")] = 0;
+        password[strcspn(password, "\n")] = 0;
+
+		if(strcmp(username, k_adi) == 0 && strcmp(password, sifre) == 0) {
+			giris = 1;
+			break;
+		}
+    }
+
+    fclose(usernames);
+    fclose(passwords);
+
+	if(giris == 1) {
+		return 1;
+	}
+	
+    return 0;
+}
+
+
+int CikisKodu() {
+	char cikis[10];
+				printf("\n\nAna menuye donmek icin herhangi bir tusa basiniz.");
+				printf("\nCikis yapmak icin X'e basiniz.\n");
+				scanf("%s",cikis);
+				
+				if(strlen(cikis)>1)
+				{
+					printf("Bastiginiz deger bir degerden uzun olamaz.\n");
+					CikisKodu();
+				}
+				else{
+				
+				if(cikis[0] == 'x' || cikis[0]=='X')
+				{
+				printf("\nCikisiniz yapildi.");
+				exit(0);
+				return;
+				}
+				else
+				{
+					kutuphanesistemi();
+				}
+				 }
+}
+
+
+int hesaplamasihirbazi(){
+		printf("\t\t\t\t\tFiyat Hesaplama Sihirbazi\n\n\n");
+
+	//TABLO YAPABİLİRİSİN BÖYLE GÜNLERİ VE HAKLARINI GÖSTEREN GÜZEL OLUR
+
+	int gun;
+	float toplam;
+	float toplameklenecek;
+	float ekstra;
+	printf("Uzatma hakkiniz bulunmuyorsa, aldiginiz kitabin tahmini olarak kac gun sizde kalacagini giriniz : ");
+	scanf("%d",&gun);
+	if(gun<0)
+			{
+				system("CLS");
+				printf("Lutfen pozitif bir sayi giriniz !\n");
+				hesaplamasihirbazi();
+			}
+			else
+			{
+			
+	char kategori[10];
+	printf("\n\nLisans ve Onlisans - 1\nLisans Ustu - 2\nAkademik Personel -3\nIdari Personel - 4");
+	printf("\n\nButun kullanicilar icin 15 gunden sonra 25 kurus kesinti alinir.");
+	printf("\n\nLutfen hangi kategoride oldugunuzu belirtiniz : ");
+	scanf("%s",&kategori);
+	if(strlen(kategori)>1)
+	{
+		system("CLS");
+		printf("Bastiginiz deger bir degerden uzun olamaz!\n\n");
+		hesaplamasihirbazi();
+	}
+	else
+	{
+	
+	int kategori2 = atoi(kategori);
+	
+	switch(kategori2)
+	{
+		case 1 : 
+			{
+			system("CLS");
+			printf("\nLisans ve Onlisans ogrencileri icin ilk 15 gun ucretsiz,\n15 gunden sonraki ilk 1 hafta icin her gun 1 TL, diger gunler 2 TL alinir.");
+			if(gun>=16 && gun<23)
+			{
+				ekstra=(gun-15)*0.25;
+				toplam=(gun-15)*1+ekstra;
+				
+				printf("\n\n\nOdemeniz gerekecek olan borc : %.2f",toplam);
+				CikisKodu();
+			}
+			else if(gun>=23)
+			{  
+				ekstra=(gun-15)*0.25; 
+				toplameklenecek=(gun-15)*1+ekstra; 
+				toplam=toplameklenecek+(gun-22)*2;  
+				printf("\n\nOdemeniz gerekecek olan borc : %.2f",toplam);
+				CikisKodu();
+			}
+			else if(gun<=15 && gun>=0)
+			{
+				printf("\n\n15 gunu henuz gecmediginiz icin odeme yapmaniza gerek yoktur.");
+				CikisKodu();
+			}
+						
+			break;
+			}
+		case 2 :
+			{
+			system("CLS");
+			printf("\nLisans ustu ogrenciler icin ilk 30 gun ucretsiz,\n30 gunden sonraki ilk 1 hafta icin her gun 1 TL, diger gunler 2 TL alinir.");
+			if(gun>=31 && gun<38)
+			{
+				ekstra=(gun-30)*0.25;
+				toplam=(gun-30)*1+ekstra;
+				
+				printf("\n\nOdemeniz gerekecek olan borc : %.2f",toplam);
+				CikisKodu();
+			}
+			else if(gun>=38)
+			{  
+				ekstra=(gun-30)*0.25; 
+				toplameklenecek=(gun-30)*1+ekstra; 
+				toplam=toplameklenecek+(gun-37)*2;  
+				printf("\n\nOdemeniz gerekecek olan borc : %.2f",toplam);
+				CikisKodu();
+			
+			}
+			else if(gun<=30 && gun>=0)
+			{
+				printf("\n\n30 gunu henuz gecmediginiz icin odeme yapmaniza gerek yoktur.");
+				CikisKodu();
+			}
+			break;
+			}
+		case 3 :
+			{
+			system("CLS");
+			printf("\nAkademik personel icin ilk 60 gun ucretsiz,\n60 gunden sonraki ilk 1 hafta icin her gun 1 TL, diger gunler 2 TL alinir.");
+			if(gun>=61 && gun<68)
+			{
+				ekstra=(gun-60)*0.25;
+				toplam=(gun-60)*1+ekstra;
+				
+				printf("\n\nOdemeniz gerekecek olan borc : %.2f",toplam);
+				CikisKodu();
+			}
+			else if(gun>=68)
+			{  
+				ekstra=(gun-60)*0.25; 
+				toplameklenecek=(gun-60)*1+ekstra; 
+				toplam=toplameklenecek+(gun-67)*2;  
+				printf("\n\nOdemeniz gerekecek olan borc : %.2f",toplam);
+				CikisKodu();
+			}
+			else if(gun<=60 && gun>=0)
+			{
+				printf("\n\n60 gunu henuz gecmediginiz icin odeme yapmaniza gerek yoktur.");
+				CikisKodu();
+			}
+			break;
+			}
+		case 4 :
+			{
+			system("CLS");
+			printf("\nIdari personel icin ilk 15 gun ucretsiz,\n15 gunden sonraki ilk 1 hafta icin her gun 1 TL, diger gunler 2 TL alinir.");	
+			if(gun>=16 && gun<23)
+			{
+				ekstra=(gun-15)*0.25;
+				toplam=(gun-15)*1+ekstra;
+				
+				printf("\n\nOdemeniz gerekecek olan borc : %.2f",toplam);
+				CikisKodu();
+			}
+			else if(gun>=23)
+			{  
+				ekstra=(gun-15)*0.25; 
+				toplameklenecek=(gun-15)*1+ekstra; 
+				toplam=toplameklenecek+(gun-22)*2;  
+				printf("\n\nOdemeniz gerekecek olan borc : %.2f",toplam);
+				CikisKodu();
+			}
+			else if(gun<=15 && gun>=0)
+			{
+				printf("\n\n15 gunu henuz gecmediginiz icin odeme yapmaniza gerek yoktur.");
+				CikisKodu();
+			}
+			break;
+			}
+		default : system("CLS"); hesaplamasihirbazi(); break;
+	}
+}
+	}
+}
+
+//while ( ( c = getchar() ) != EOF && c != '\n' );
+
+int YoneticiyeMesaj(){
+	
+	int c;
+	while ( ( c = getchar() ) != EOF && c != '\n' ); //gets ile ilgili sorunu çözmek için
+	
+	FILE *yorumdosyasi;
+	
+	yorumdosyasi=fopen("YoneticiyeMesaj.txt","a");
+	
+	printf("\nYoneticiye iletmek istediginiz oneri,sikayet veya yorumunuzu yazabilirsiniz.\nLutfen anlasilir bir dil kullaniniz.\n\n");
+	printf("Buraya yaziniz[Maksimum 500 harf] : ");
+	
+	char yorum[500];
+	
+	gets(yorum);
+	putc('\n',yorumdosyasi);
+	putc('\n',yorumdosyasi);
+	fputs(yorum,yorumdosyasi);
+	
+	fclose(yorumdosyasi);	
+	
+	printf("\n\n*****Iletiniz basariyla alindi. Tesekkur ederiz.*****\n\n");
+	printf("--------------------------------");
+	CikisKodu();
+	
+		
+	
+}
+
+
+int kurallar()	{
+				printf("\n\n*1. SKB'li akademik personel, idari personel ve ogrenciler SKB kimlik kartlari ile;\n");
+				printf("a) Kutuphaneye uye olabilirler,\nb) Kendileri icin kitap kiralayabilirler.\n");
+				printf("*2. Uyeler baskasi icin, baskasi adina kitap kiralayamazlar.\n");
+				printf("*3. Kiralama yapilirken, SKB kimlik karti kullanilmak zorundadir.\n");
+				printf("*4. Uzerinde gecikmis kitap ve / veya limitin uzerinde para cezasi bulunan kullanicilar\nkiralama hizmetinden yararlanamaz.\n");
+				printf("*5. Emekli Personel ve Misafir uyeler kiralama hizmetinden yararlanamazlar.\n");
+				printf("*6. Kullanici kiraladigi yayini zamaninda iade etmekle yukumludur.\n");
+				printf("*7. Kullanici odunc aldigi yayini, yayini odunc aldigi bolum veya kutuphaneye teslim etmelidir.\n");
+				printf("*8. Nadir eserlere yalnizca 'SKB web sitesi--> Kutuphane--> Nadir eserler' uzerinden erisilebilir.\n");
+				printf("*9. Zamaninda iade edilmeyen yayinlar icin para cezasi uygulanir.\n");
+				printf("*10. Kullanicilar odunc aldiklari yayinlari korumak ve zarar vermemekle yukumludurler.\n\n\n");
+				printf("Iletisim Bilgileri : \nKinikli Kampusu 202120 Pamukkale/DENIZLI\n");
+				printf("Danisma : (0212)202121905100\n");
+				printf("E-posta : serkankaya0721@gmail.com\n\n");
+				
+				char geridonmek[10];
+				//tekrarlamak:
+				printf("\nAnamenuye donmek icin 1'e basiniz.\nHesaplama sihirbazina gitmek icin 2'ye basiniz : ");
+				scanf("%s",&geridonmek);
+				
+				if(strlen(geridonmek)>1)
+				{
+					system("CLS");
+					printf("Bastiginiz deger bir degerden uzun olamaz!\n\n");
+					kurallar();
+				}
+				else
+				{
+					
+				
+				int geridonmekIKI = atoi(geridonmek);
+				
+				switch(geridonmekIKI)
+				{
+					case 1 :
+						{
+							system("CLS");
+							kutuphanesistemi();
+							break;
+						}
+					case 2 :
+						{
+							system("CLS");
+							hesaplamasihirbazi();
+							break;
+						}
+					default : system("CLS"); kurallar(); break;
+				} 
+		}
+			}
+	
+		
+int kitaptekrar(){
+	
+	char devamktp[10];
+	
+	printf("\n\nKitap bakmaya devam etmek icin 1'e basiniz.");
+	printf("\nAnamenuye donmek icin herhangi bir tusa basiniz.\n");
+	scanf("%s",&devamktp);
+	
+	if(strlen(devamktp)>1)
+	{
+		printf("\nDevam etmek icin yalnizca 1'e basiniz.\n");
+		kitaptekrar();
+	}
+	else
+	{
+	
+	int devamINT = atoi(devamktp);
+	
+	switch(devamINT)
+	{
+		case 1 : system("CLS");kitaplar(); break;
+		default : system("CLS");kutuphanesistemi(); break;
+	}
+	
+}	
+	
+}
+		
+			
+int kitaplar() {
+	
+	FILE *kitaplar;
+	char kitaps;
+	kitaplar=fopen("kitaplar.txt","r");
+	
+	//fgets(kitaps,200,kitaplar);
+	//puts(kitaps);
+	
+	do
+	{
+		kitaps=getc(kitaplar); //fgets yeni satırı okuyamadığı için getc kullandım
+		printf("%c",kitaps);
+	}
+	while(kitaps!=EOF);
+	
+	fclose(kitaplar);
+	
+	
+	
+
+	kitapsec();
+}
+
+
+int kitapsec() {
+	
+	setlocale(LC_ALL, "Turkish"); 
+	printf("\nBilgi edinmek istediginiz kitabin numarasini yaziniz : ");
+
+	char kitap[10];
+	scanf("%s", &kitap); //%d virgülde patlıyor, bu yüzden string kullanıyoruz.
+	
+	if(strlen(kitap)>2)
+	{
+		printf("\nBastiginiz deger iki degerden uzun olamaz!\n\n");
+		kitapsec();
+	}
+	else
+	{
+
+	int sayi = atoi(kitap); //atoi ne atoi sadece sayilari cekiyor string -> num
+	
+	switch(sayi)
+	{
+		case 11 : kutuphanesistemi(); return; break;
+		case 12 :
+		{
+			system("CLS"); printf("\nAşk ve Gurur - Jane Austen"); kitaptekrar();
+			break;
+		}  
+		case 13 :
+		{
+			system("CLS"); printf("\nAylak Adam - Yusuf Atılgan"); kitaptekrar();
+			break;
+		} 
+		case 14 :
+		{
+			system("CLS"); printf("\nBulantı - Jean-Paul Sartre"); kitaptekrar();
+			break;
+		}
+		case 15 :
+		{
+			system("CLS"); printf("\nBülbülü Öldürmek - Harper Lee"); kitaptekrar();
+			break;
+		} 
+		case 16 :
+		{
+			system("CLS"); printf("\nCesur Yeni Dünya - Aldous Huxley"); kitaptekrar();
+			break;
+		} 
+		case 17 :
+		{
+			system("CLS"); printf("\nCalikusu - Resat Nuri Guntekin"); kitaptekrar();
+			break;
+		} 
+		case 18 :
+		{
+			system("CLS"); printf("\nÇavdar Tarlasında Çocuklar - Jerome David Salinger"); kitaptekrar();
+			break;
+		} 
+		case 19 :
+		{
+			system("CLS"); printf("\nDenemeler - Michel de Montaigne"); kitaptekrar();
+			break;
+		} 
+		case 20 :
+		{
+			system("CLS"); printf("\nDokunmayin Portakalime(Bir Nefeste Guneydogu) - Bilal Civelek"); kitaptekrar();
+			break;
+		} 
+		case 21 :
+		{
+			system("CLS"); printf("\nDokuzuncu Hariciye Kogusu - Peyami Safa"); kitaptekrar();
+			break;
+		} 
+		case 22 :
+		{
+			system("CLS"); printf("\nDon Kişot - Miguel de Cervantes Saavedra"); kitaptekrar();
+			break;
+		}
+		case 23 :
+		{
+			system("CLS"); printf("\nDönüşüm - Franz Kafka"); kitaptekrar();
+			break;
+		} 
+		case 24 :
+		{
+			system("CLS"); printf("\nEylül	Mehmet Rauf"); kitaptekrar();
+			break;
+		} 
+		case 25 :
+		{
+			system("CLS"); printf("\nFahrenheit 451 - Ray Bradbury"); kitaptekrar();
+			break;
+		} 
+		case 26 :
+		{
+			system("CLS"); printf("\nFareler ve İnsanlar John Steinbeck"); kitaptekrar();
+			break;
+		} 
+		case 27 :
+		{
+			system("CLS"); printf("\nHamlet - William Shakespeare"); kitaptekrar();
+			break;
+		} 
+		case 28 :
+		{
+			system("CLS"); printf("\nHakkari'de Bir Mevsim	Ferit Edgü"); kitaptekrar();
+			break;
+		} 
+		case 29 :
+		{
+			system("CLS"); printf("\nHayvan Çiftliği - George Orwell"); kitaptekrar();
+			break;
+		} 
+		case 30 :
+		{
+			system("CLS"); printf("\nHuzur - Ahmet Hamdi Tanpınar"); kitaptekrar();
+			break;
+		} 
+		case 31 :
+		{
+			system("CLS"); printf("\nİki Şehrin Hikayesi - Charles Dickens"); kitaptekrar();
+			break;
+		} 
+		case 32 :
+		{
+			system("CLS"); printf("\nInce Memed - Yasar Kemal"); kitaptekrar();
+			break;
+		} 
+		case 33 :
+		{
+			system("CLS"); printf("\nInsan Neyle Yasar - Lev Nikolayevic Tolstoy"); kitaptekrar();
+			break;
+		}
+		case 34 :
+		{
+			system("CLS"); printf("\nJane Eyre - Charlotte Bronte"); kitaptekrar();
+			break;
+		}
+		case 35 :
+		{
+			system("CLS"); printf("\nKırmızı ve Siyah - Henri Beyle Stendhal"); kitaptekrar();
+			break;
+		}
+		case 36 :
+		{
+			system("CLS"); printf("\nKörlük - Jose Saramago"); kitaptekrar();
+			break;
+		}
+		case 37 :
+		{
+			system("CLS"); printf("\nKuyucakli Yusuf - Sabahattin Ali"); kitaptekrar();
+			break;
+		}
+		case 38 :
+		{
+			system("CLS"); printf("\nKüçük Prens - Antoine de Saint-Exupery"); kitaptekrar();
+			break;
+		}
+		case 39 :
+		{
+			system("CLS"); printf("\nKürk Mantolu Madonna - Sabahattin Ali"); kitaptekrar();
+			break;
+		}
+		case 40 :
+		{
+			system("CLS"); printf("\nMartin Eden - Jack London"); kitaptekrar();
+			break;
+		}
+		case 41 :
+		{
+			system("CLS"); printf("\nMutlu Prens - Oscar Wilde"); kitaptekrar();
+			break;
+		}
+		case 42 :
+		{
+			system("CLS"); printf("\nNietzsche Ağladığında - Irvin D. Yalom"); kitaptekrar();
+			break;
+		}
+		case 43 :
+		{
+			system("CLS"); printf("\nNotre Dame'ın Kamburu - Victor Hugo"); kitaptekrar();
+			break;
+		}
+		case 44 :
+		{
+			system("CLS"); printf("\nNutuk - Mustafa Kemal Atatürk"); kitaptekrar();
+			break;
+		}
+		case 45 :
+		{
+			system("CLS"); printf("\nOtomatik Portakal - Anthony Burgess"); kitaptekrar();
+			break;
+		}
+		case 46 :
+		{
+			system("CLS"); printf("\nSavaş ve Barış - Lev Nikolayeviç Tolstoy"); kitaptekrar();
+			break;
+		}
+		case 47 :
+		{
+			system("CLS"); printf("\nSaatleri Ayarlama Enstitüsü - Ahmet Hamdi Tanpınar"); kitaptekrar();
+			break;
+		}
+		case 48 :
+		{
+			system("CLS"); printf("\nSefiller - Victor Hugo"); kitaptekrar();
+			break;
+		}
+		case 49 :
+		{
+			system("CLS"); printf("\nSerenad - Zülfü Livaneli"); kitaptekrar();
+			break;
+		}
+		case 50 :
+		{
+			system("CLS"); printf("\nSimyacı - Paulo Coelho"); kitaptekrar();
+			break;
+		}
+		case 51 :
+		{
+			system("CLS"); printf("\nSuç ve Ceza - Fyodor Mihayloviç Dostoyevski"); kitaptekrar();
+			break;
+		}
+		case 52 :
+		{
+			system("CLS"); printf("\nTutunamayanlar - Oguz Atay	"); kitaptekrar();
+			break;
+		}
+		case 53 :
+		{
+			system("CLS"); printf("\nUçurtma Avcısı - Khaled Hosseini"); kitaptekrar();
+			break;
+		}
+		case 54 :
+		{
+			system("CLS"); printf("\nVeba - Albert Camus"); kitaptekrar();
+			break;
+		}
+		case 55 :
+		{
+			system("CLS"); printf("\nVeba Geceleri - Orhan Pamuk"); kitaptekrar();
+			break;
+		}
+		case 56 :
+		{
+			system("CLS"); printf("\nYabancı - Albert Camus"); kitaptekrar();
+			break;
+		}
+		case 57 :
+		{
+			system("CLS"); printf("\nYeraltından Notlar - Fyodor Mihayloviç Dostoyevski"); kitaptekrar();
+			break;
+		}
+		case 58 :
+		{
+			system("CLS"); printf("\nYitik Adamın Öyküsü - Jose Saramago"); kitaptekrar();
+			break;
+		}
+		case 59 :
+		{
+			system("CLS"); printf("\nYüzyıllık Yalnızlık - Gabriel Garcia Marquez"); kitaptekrar();
+			break;
+		}
+		case 60 :
+		{
+			system("CLS"); printf("\n1984 - George Orwell"); kitaptekrar();
+			break;
+		}
+		
+
+		default : printf("\nLutfen gecerli bir sayi giriniz. "); kitapsec(); break;
+	}
+	
+
+	
+	}
+	
+	printf("\n\n");
+	//kitaptekrar(); //tek tek hepsinin sonuna koymayi dene
+	//kitaplar();
+}
+
+
+int ucretmenusu(){
+		
+		printf("\t\t\tKITAP ODUNC ALMA VE UCRET BILGILENDIRME SISTEMINE HOS GELDINIZ...\n\n");
+	
+	printf("1 - Odunc alma ve ucretlendirme hakkinda genel bilgiler.");
+	printf("\n2 - Kurallarimiz.");
+	printf("\n3 - Ucret hesaplama sihirbazi.");
+	
+	char secimucretTekrarust[10];
+	printf("\n\nYapacaginiz islemi seciniz : ");
+	scanf("%s",&secimucretTekrarust);
+	if(strlen(secimucretTekrarust)>1)
+	{
+		system("CLS");
+		printf("Bastiginiz deger bir degerden uzun olamaz!\n\n");
+		ucretmenusu();
+	}
+	else
+	{
+	int secimucretTekrar = atoi(secimucretTekrarust);
+	
+	switch(secimucretTekrar)
+	{
+		case 1 : 
+		{
+			system("CLS");
+			ucretbilgi();
+			break;	
+		}
+		case 2 :
+		{
+			system("CLS");
+			kurallar();
+			break;	
+		}
+		case 3 :
+		{
+			system("CLS");
+			hesaplamasihirbazi();
+			break;	
+		} 
+		default : 
+		{
+			system("CLS"); 
+			ucretmenusu(); 
+			break;
+		}
+    }
+	}
+}
+
+
+int sayfa2ucretbilgi(){			
+	
+	printf("\n\n\t\t\tSure uzatma islemini nasil yapabilirim ?\n\n");
+	printf("***Odunc alinan kaynagin kullanim suresi, iade tarihinden once, baska bir kullanici tarafindan bilgi kaynagi ayirt \nedilmemisse ve kullanicinin ");
+	printf("cezasi yoksa Odunc Verme Bankosu'na gelerek ya da iade tarihinden 3 gun kala \nweb sitesi uzerinden sure uzatma islemlerini yapabilirler.\n") ;
+	printf("\n*Iade tarihinin son gunu sure uzatma islemi yapilamamaktadir!\n");
+	
+	printf("\n\n\t\t\tOdunc aldigim kitabi arkadasim iade edebilir mi ?\n\n");
+	printf("***Evet, iade islemlerini sizden baska biri yapabilir.\n");
+	
+	printf("\n\n\t\t\tBenim adima baska biri kitap odunc alabilir mi ?\n\n");
+	printf("***Hayir, yalnizca ogrencilerimiz kartlariyla gelerek odunc alma islemini kendisi gerceklestirebilir.\n");
+	
+		char devamtusuAlma2[10];
+	
+		printf("\n\n\nBir sonraki soruya gecmek icin 1'e basiniz : ");
+		scanf("%s",&devamtusuAlma2); // %d virgülde calismiyor bu yuzden string kullandik
+		if(strlen(devamtusuAlma2)>1)
+		{
+			
+			system("CLS");
+			printf("Bastiginiz deger bir degerden uzun olamaz!\n");
+			sayfa2ucretbilgi();
+			
+		}
+		else
+		{
+		
+	
+		int devamtusu2 = atoi(devamtusuAlma2); ////atoi ne atoi sadece sayilari cekiyor string -> num
+		switch(devamtusu2)
+		{
+			case 1 : 
+			{
+				system("CLS");
+				sayfa3ucretbilgi();
+				break;
+			} 
+		default : system("CLS");printf("Devam etmek icin lutfen 1'e basiniz.");sayfa2ucretbilgi(); break;
+		}
+	}
+		
+	
+}
+
+
+int sayfa3ucretbilgi(){
+	
+	
+	printf("\n\n\t\t\tOdunc alinan kitabin kaybolmasi ya da zarar gormesi durumunda ne yapmaliyim ?\n\n");
+	printf("***Odunc alinan kitabin kaybolmasi ya da duzeltilemez sekilde zarar gormesi durumunda kullanicilardan bilgi\nkaynaginin aynisinin temin edilmesi");
+	printf(" istenir. Eger bilgi kaynaginin aynisi bulunamazsa, kullanicidan bunu karsilayacak \nzararin temini istenir.\n");
+	
+	printf("\n\n\t\t\tOdunc alinan kitabi kutuphaneye getirmezsem bir ceza uygulanir mi ?\n\n");
+	printf("***Odunc alinan kitaplarin geri iade suresinin asilmasi durumunda ilk 7 gun 1 TL, 8. gun ve sonrasi icin ise \n2 TL gecikme bedeli alinir.");
+		
+		
+		char geridonmetusu[10];
+		
+		printf("\n\n\nBilgilendirme sistemine geri donmek icin 1'e basiniz : ");
+		scanf("%s",&geridonmetusu);
+		
+		if(strlen(geridonmetusu)>1)
+		{
+			
+			system("CLS");
+			printf("Bastiginiz deger bir degerden uzun olamaz!\n");
+			sayfa3ucretbilgi();
+		
+		}
+		else
+		{
+		
+		int geridon=atoi(geridonmetusu); 
+		
+		switch(geridon)
+		{
+			case 1 : 
+			{
+				system("CLS");
+				ucretmenusu();
+				break;
+			}
+			default :
+			{
+				system("CLS");
+				printf("Devam etmek icin lutfen 1'e basiniz.");
+				sayfa3ucretbilgi(); 
+				break;
+			} 
+		} 
+	}
+	
+	
+}
+
+
+int ucretbilgi(){
+	
+			 
+		
+	printf("\n\n\t\t\t\tSIKCA SORULAN SORULAR\n\n");
+	printf("Tek seferde en fazla kac kitap odunc alabilirim?\n\n");
+	printf("***Lisans ve onlisans ogrencileri tek seferde '10' kitap alma hakkina sahiptirler.\nHer bir kitap icin 15 gun odunc alma suresine sahiptirler.\n\n");
+	printf("***Lisans ustu ogrencileri tek seferde '15' kitap alma hakkina sahiptirler.\nHer bir kitap icin 30 gun odunc alma suresine sahiptirler.\n\n");
+	printf("***Akademik personeller tek seferde '20' kitap alma hakkina sahiptirler.\nHer bir kitap icin 60 gun odunc alma suresine sahiptirler.\n\n");
+	printf("***Idari personeller tek seferde '15' kitap alma hakkina sahiptirler.\nHer bir kitap icin 15 gun odunc alma suresine sahiptirler...\n\n");
+	printf("\n---Kitaplar farkli bir kullanici tarafindan ayirtilmadigi ve kullanicilarin borc ve \ncezasi olmadigi  takdirde  iade suresi 2 kere uzatilabilir!");
+	
+	char devamtusuAlma[10];
+	
+	printf("\n\n\nBir sonraki soruya gecmek icin 1'e basiniz : ");
+	scanf("%s",&devamtusuAlma); // %d virgülde calismiyor bu yuzden string kullandik
+	
+	if(strlen(devamtusuAlma)>1)
+	{
+		system("CLS");
+		printf("Bastiginiz deger bir degerden uzun olamaz!\n\n");
+		ucretbilgi();
+	}
+	else
+	{		
+				
+	int devamtusu = atoi(devamtusuAlma); ////atoi ne atoi sadece sayilari cekiyor string -> num
+	
+	
+	switch(devamtusu)
+	{
+		case 1 : 
+		{
+			system("CLS");
+			sayfa2ucretbilgi();
+			break;
+		}
+		
+		default : system("CLS");printf("Devam etmek icin lutfen 1'e basiniz.");ucretbilgi(); break;
+	}
+}
+	}
+	
+	
+int kutuphanesistemi() {
+	sleep(1);
+	system("CLS");
+	printf("\n\n*******SKB Kutuphane Sistemine Hos geldiniz*******");
+	printf("\n\n-Kitaplar hakkinda bilgi almak icin 1'e tiklayiniz!\n\n-Kiralama fiyatlari hakkinda bilgi almak icin 2'ye tiklayiniz!\n");
+	printf("\n-Fiyat hesaplama sihirbazina gitmek icin 3'e tiklayiniz!\n\n");
+	printf("-Kendini sansli hissediyorsan 4'e tikla!\n\n");
+	printf("-Yoneticiye mesaj atmak icin 5'e tiklayin.\n\n");
+	printf("-Cikis yapmak icin X'e tiklayiniz!\n");
+
+	char yazi[10];
+	scanf("%s", &yazi);
+	if(strlen(yazi)>1)
+	{
+		printf("Bastiginiz deger bir degerden uzun olamaz.\n");
+		kutuphanesistemi();
+	}
+	else
+	{
+		if(yazi[0] == 'x' || yazi[0]=='X'){
+		printf("\nCikisiniz yapildi.");
+		exit(0);
+		return;
+	}
+	}
+	
+
+	int tercih = atoi(yazi);
+	
+	switch(tercih) {
+			case 1: {
+				kitaplar();
+				break;
+			}
+			case 2: {
+			system("CLS");	
+			ucretmenusu();
+			break;
+			}
+			case 3 :
+			{
+				system("CLS");
+				hesaplamasihirbazi();
+				break;
+			}
+			case 4 :
+			{
+				system("CLS");
+				
+				char oneri[10];
+				printf("***Aklinda kalacaksa,\nSana onerdigimiz kitaplarin ilkini gormek icin 'E'ye iki kez ayri ayri bas.***\n");
+				printf("\nProgramdan cikis yapmak icin herhangi bir tusa iki kez bas.\n");
+				printf("\nAna menuye geri donmek icin 1'e basabilirsin : \n");
+				scanf("%s",oneri);
+				RandomKitap();
+				
+				int oneri2=atoi(oneri);
+				
+				switch(oneri2)
+				{
+					case 1 : system("CLS"); kutuphanesistemi(); break;
+					default : sleep(1); break;
+				}
+					break;
+			}
+			case 5 : system("CLS"); YoneticiyeMesaj(); break;
+			
+			default: 
+			{
+				printf("\nLutfen gecerli bir sayi giriniz.");
+				kutuphanesistemi();
+				break;
+			}
+	}
+}	
+
+
+
+
+
+
+//int yoneticiyemesajat
+
+
+
+
+
+
+//int kitaptest(){
+	
+	//printf("Kitap tahmin etme oyununa hos geldin!\n\n");
+	
+	//printf("Zorluk seviyesi seciniz : ");
+	/*char c;
+
+    printf("Enter a character: ");
+    scanf("%c",&c);
+
+    if (isdigit(c) == 0)
+    {
+    	printf("%c is not a digit.",c);
+	}
+         
+    else
+    {
+    	printf("%c is a digit.",c);
+	}*/
+         
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//return 0;
+//}
+
+
+
+//end of the lines...
+
+//SERKAN KAYA
