@@ -1,0 +1,5 @@
+
+
+You need to loop to the newline in case the user types 'new' instead of just 'N' as the command. There is discussion after other answers about whether this is a good idea. It works, but might throw away arbitrary input, but you would probably just diagnose that you don't know what to do with that input anyway. (You also run into problems if the user is a techno-brute who types 'N' and then control-D; this gets the N to the program without sending a newline. Your single getchar() would go
+
+deneme yapiyorum

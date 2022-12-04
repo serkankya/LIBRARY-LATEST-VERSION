@@ -1,0 +1,51 @@
+Siralama alfabetiktir.
+(11) Uygulamadan cikis yap.
+(12) Ask-i Memnu - Halit Ziya Usakligil
+(13) Aylak Adam - Yusuf Atilgan
+(14) Bulanti - Jean-Paul Sartre
+(15) Bulbulu Oldurmek - Harper Lee
+(16) Cesur Yeni Dünya - Aldous Huxley
+(17) Calikusu - Resat Nuri Guntekin
+(18) Cavdar Tarlasinda Cocuklar - Jerome David Salinger
+(19) Denemeler - Michel de Montaigne
+(20) Dokunmayin Portakalime(Bir Nefeste Guneydogu) - Bilal Civelek
+(21) Dokuzuncu Hariciye Kogusu - Peyami Safa	
+(22) Don Kisot - Miguel de Cervantes Saavedra
+(23) Donusum - Franz Kafka
+(24) Eylul - Mehmet Rauf
+(25) Fahrenheit 451 - Ray Bradbury
+(26) Fareler ve Insanlar - John Steinbeck
+(27) Hamlet - William Shakespeare
+(28) Hakkari'de Bir Mevsim - Ferit Edgu
+(29) Hayvan Ciftligi - George Orwell	
+(30) Huzur - Ahmet Hamdi Tanpınar
+(31) Iki Sehrin Hikayesi - Charles Dickens
+(32) Ince Memed - Yasar Kemal
+(33) Insan Neyle Yasar - Lev Nikolayevic Tolstoy
+(34) Jane Eyre - Charlotte Bronte
+(35) Kirmizi ve Siyah - Henri Beyle Stendhal
+(36) Korluk - Jose Saramago
+(37) Kuyucakli Yusuf - Sabahattin Ali
+(38) Kucuk Prens - Antoine de Saint-Exupery
+(39) Kurk Mantolu Madonna - Sabahattin Ali
+(40) Martin Eden - Jack London
+(41) Mutlu Prens - Oscar Wilde
+(42) Nietzsche Agladiginda - Irvin D. Yalom
+(43) Notre Dame'in Kamburu - Victor Hugo
+(44) Nutuk - Mustafa Kemal Ataturk
+(45) Otomatik Portakal - Anthony Burgess		
+(46) Savas ve Baris - Lev Nikolayevic Tolstoy
+(47) Saatleri Ayarlama Enstitusu - Ahmet Hamdi Tanpınar
+(48) Sefiller - Victor Hugo
+(49) Serenad	- Zulfu Livaneli
+(50) Simyaci - Paulo Coelho
+(51) Suc ve Ceza - Fyodor Mihaylovic Dostoyevski		
+(52) Tutunamayanlar - Oguz Atay		
+(53) Ucurtma Avcici - Khaled Hosseini
+(54) Veba - Albert Camus		
+(55) Veba Geceleri - Orhan Pamuk				
+(56) Yabanci - Albert Camus
+(57) Yeraltindan Notlar - Fyodor Mihaylovic Dostoyevski
+(58) Yitik Adamin Oykusu- Jose Saramago
+(59) Yuzyillik Yalnizlik - Gabriel Garcia Marquez
+(60) 1984 - George Orwell
